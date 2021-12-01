@@ -1,5 +1,6 @@
 ---
 title: "Advent of Code 2021 - Day 1"
+author: "Gus Lipkin ~ github.com/guslipkin/AdventOfCode2021"
 output: html_notebook
 ---
 

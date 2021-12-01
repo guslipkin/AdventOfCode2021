@@ -12,7 +12,7 @@
 <meta name="author" content="Gus Lipkin ~ github.com/guslipkin/AdventOfCode2021" />
 
 
-<title>Advent of Code 2021 - Day 1</title>
+<title>Advent of Code 2021 - Day 1 Speed Edition</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1755,7 +1755,7 @@ pre code {
 
 
 
-<h1 class="title toc-ignore">Advent of Code 2021 - Day 1</h1>
+<h1 class="title toc-ignore">Advent of Code 2021 - Day 1 Speed Edition</h1>
 <h4 class="author">Gus Lipkin ~ github.com/guslipkin/AdventOfCode2021</h4>
 
 </div>
@@ -1764,49 +1764,19 @@ pre code {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5saWJyYXJ5KGRhdGEudGFibGUpXG5gYGAifQ== -->
-<pre class="r"><code>library(tidyverse)
-library(data.table)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZHQgPC0gZGF0YS50YWJsZShyZWFkLnRhYmxlKFwiaW5wdXQudHh0XCIsIHNlcCA9IFwiXFxuXCIpKVxuaGVhZChkdClcbmBgYCJ9 -->
-<pre class="r"><code>dt &lt;- data.table(read.table(&quot;input.txt&quot;, sep = &quot;\n&quot;))
-head(dt)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEudGFibGUiLCJkYXRhLmZyYW1lIl0sIm5yb3ciOjYsIm5jb2wiOjEsInN1bW1hcnkiOnsiRGVzY3JpcHRpb24iOlsiZGF0YS50YWJsZSBbNiDDlyAxXSJdfX0sInJkZiI6Ikg0c0lBQUFBQUFBQUExMVFTd3JDTUJDZHRJMWl3UTk0amhiVWpRY1FEeUFxYm1OYnRWaVQwa1owNmMxMEs2SUhjbUdkMUFRa2l6ZVplYnlaekp2WlpEWHlWejRBdU9BUkFpN0ZGT2hpUGczR0FKNkRCUUVQV3VvOW82aGZFd0J0UkFOeFJkd1FkOFFUOFVJOHJNWldJVTRoWjRlazFJM09CVU5WVlc5TFNLT01sVXJVK3lQOW1Fa1diZ3JzdCtWbTVyL2NXUTR3Zml4cFUrUXlGUnpGam5KQXJTWlNXRVQzeU5Yd09JaDJSNzRQaG1vUDdSeTBDYUl2WUhMeSs5S3I5Q2lxUnpVU3ZrMTVZbmJPMkRySmROSEJ3OVFld3J4SXVUU0drUzFES1NRek9qOFNtV0ZxYi9ENUFzRld6c2k0QVFBQSJ9 -->
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["V1"],"name":[1],"type":["int"],"align":["right"]}],"data":[{"1":"191"},{"1":"192"},{"1":"201"},{"1":"205"},{"1":"206"},{"1":"203"}],"options":{"columns":{"min":{},"max":[10],"total":[1]},"rows":{"min":[10],"max":[10],"total":[6]},"pages":{}}}
-  </script>
-</div>
-<!-- rnb-frame-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBwYXJ0IDFcbmR0JGRpZmYgPC0gYygwLCBkaWZmKGR0JFYxKSlcbmR0ICU+JVxuICBmaWx0ZXIoZGlmZiA+IDApICU+JVxuICBucm93KClcbmBgYCJ9 -->
-<pre class="r"><code># part 1
-dt$diff &lt;- c(0, diff(dt$V1))
-dt %&gt;%
-  filter(diff &gt; 0) %&gt;%
-  nrow()</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBmYXN0ZXN0IHNvbHV0aW9uXG4jIGRhdGEudGFibGUgd2FzIGZhc3RlciB1bnRpbCBJIHR1cm5lZCBvbiB3YXJuPUZBTFNFIGluIHJlYWRMaW5lcyBmb3IgQmFzZSBSXG5kdCA8LSBhcy5udW1lcmljKHJlYWRMaW5lcyhcImlucHV0LnR4dFwiLCB3YXJuID0gRkFMU0UpKVxuIyBwYXJ0IDFcbnN1bShkaWZmKGR0LCBsYWcgPSAxKSA+IDApXG5gYGAifQ== -->
+<pre class="r"><code># fastest solution
+# data.table was faster until I turned on warn=FALSE in readLines for Base R
+dt &lt;- as.numeric(readLines(&quot;input.txt&quot;, warn = FALSE))
+# part 1
+sum(diff(dt, lag = 1) &gt; 0)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIDEzNzRcbiJ9 -->
 <pre><code>[1] 1374</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBwYXJ0IDJcbmR0JGRpZmYgPC0gYygwLCAwLCAwLCBkaWZmKGR0JFYxLCBsYWcgPSAzKSlcbmR0ICU+JVxuICBmaWx0ZXIoZGlmZiA+IDApICU+JVxuICBucm93KClcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBwYXJ0IDJcbnN1bShkaWZmKGR0LCBsYWcgPSAzKSA+IDApXG5gYGAifQ== -->
 <pre class="r"><code># part 2
-dt$diff &lt;- c(0, 0, 0, diff(dt$V1, lag = 3))
-dt %&gt;%
-  filter(diff &gt; 0) %&gt;%
-  nrow()</code></pre>
+sum(diff(dt, lag = 3) &gt; 0)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIDE0MThcbiJ9 -->
 <pre><code>[1] 1418</code></pre>
@@ -1814,8 +1784,47 @@ dt %&gt;%
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmJlbmNobWFyazo6YmVuY2htYXJrKFxuICBcIkZpcnN0IHRyeVwiID0ge1xuICAgIGxpYnJhcnkodGlkeXZlcnNlKVxuICAgIGxpYnJhcnkoZGF0YS50YWJsZSlcbiAgICBkdCA8LSBkYXRhLnRhYmxlKHJlYWQudGFibGUoXCJpbnB1dC50eHRcIiwgc2VwID0gXCJcXG5cIikpXG4gICAgIyBwYXJ0IDFcbiAgICBkdCRkaWZmIDwtIGMoMCwgZGlmZihkdCRWMSkpXG4gICAgZHQgJT4lIGZpbHRlcihkaWZmID4gMCkgJT4lIG5yb3coKVxuICAgICMgcGFydCAyXG4gICAgZHQkZGlmZiA8LSBjKDAsIDAsIDAsIGRpZmYoZHQkVjEsIGxhZyA9IDMpKVxuICAgIGR0ICU+JSBmaWx0ZXIoZGlmZiA+IDApICU+JSBucm93KClcbiAgICB9LFxuICBcIkJhc2UgUlwiID0ge1xuICAgIGR0IDwtIGFzLm51bWVyaWMocmVhZExpbmVzKFwiaW5wdXQudHh0XCIsIHdhcm4gPSBGQUxTRSkpXG4gICAgIyBwYXJ0IDFcbiAgICBzdW0oZGlmZihkdCwgbGFnID0gMSkgPiAwKVxuICAgICMgcGFydCAyXG4gICAgc3VtKGRpZmYoZHQsIGxhZyA9IDMpID4gMClcbiAgICB9LFxuICBcImRhdGEudGFibGVcIiA9IHtcbiAgICAjIHBhcnQgMSBhbmQgMlxuICAgIGRhdGEudGFibGU6OmZyZWFkKFwiaW5wdXQudHh0XCIsIFxuICAgICAgICAgICAgICAgICAgICAgIHNlcCA9IFwiXFxuXCIpWywgLihkaWZmMSA9IHN1bShkaWZmKFYxLCBsYWcgPSAxKSA+IDApLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBkaWZmMyA9IHN1bShkaWZmKFYxLCBsYWcgPSAzKSA+IDApKV1cbiAgfSxcbiAgcmVwbGljYXRpb25zID0gMTAwMCwgY29sdW1ucyA9IGMoMTo1KSwgb3JkZXIgPSBcInVzZXIuc2VsZlwiKVxuYGBgIn0= -->
+<pre class="r"><code>rbenchmark::benchmark(
+  &quot;First try&quot; = {
+    library(tidyverse)
+    library(data.table)
+    dt &lt;- data.table(read.table(&quot;input.txt&quot;, sep = &quot;\n&quot;))
+    # part 1
+    dt$diff &lt;- c(0, diff(dt$V1))
+    dt %&gt;% filter(diff &gt; 0) %&gt;% nrow()
+    # part 2
+    dt$diff &lt;- c(0, 0, 0, diff(dt$V1, lag = 3))
+    dt %&gt;% filter(diff &gt; 0) %&gt;% nrow()
+    },
+  &quot;Base R&quot; = {
+    dt &lt;- as.numeric(readLines(&quot;input.txt&quot;, warn = FALSE))
+    # part 1
+    sum(diff(dt, lag = 1) &gt; 0)
+    # part 2
+    sum(diff(dt, lag = 3) &gt; 0)
+    },
+  &quot;data.table&quot; = {
+    # part 1 and 2
+    data.table::fread(&quot;input.txt&quot;, 
+                      sep = &quot;\n&quot;)[, .(diff1 = sum(diff(V1, lag = 1) &gt; 0),
+                                      diff3 = sum(diff(V1, lag = 3) &gt; 0))]
+  },
+  replications = 1000, columns = c(1:5), order = &quot;user.self&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MywibmNvbCI6NSwic3VtbWFyeSI6eyJEZXNjcmlwdGlvbiI6WyJkZiBbMyDDlyA1XSJdfX0sInJkZiI6Ikg0c0lBQUFBQUFBQUExMVNQVS9ETUJBOXAwbExJeWdJL2tBbnhKSU1zTEFGSWRRZlVEN1VnY1ZOM1JJd1RoUzdvbDFZMklHTkFURWlacGlabUpHNklNVE9BaE5UUVdJb09JbE5TeUpadm5mdnZ0NDU5WTNHaXQyd0FhQUFKa0pRc0tRSjF2Wld6VmtGTUEwSkVKaFFUdTZlREZwSVdIbm1zb3lVS0s1alRxcDFoZXdXRnRnVnVFbUo4cFJyUWN4RlZjUjlDV2JTUkNpOGpROVVFcC8zdURSOE9Oc0Y3L25tNCtyT0FXOG83dmVQditHUHY3eCszZndhZ0NmSnlvNEYzdTNpZSs5cE5PWUhDYkVHM3N2SlBMczRCKzh6dVU4aHA4SmkrSkJ3cGNCU1RsTVFMcFE5SFpPSUJqNFdRY2k0VnREbEpIWTVvVzNsbU9KOVBvbExoT0tJazFhdVdUa09qMXpkVUNrSFE5MG9QNWxQTWRlVG9YL2JiTWV5aGtTalhFb3BqTEl4d1VnZXBwaExSbkZTSVd1VmZwUGtiSmNsazdVY2Y2L0xEcHpsaVZDa3BrVnFVbTFiV1h2alI1VXE2aCtBc0U3QTlIT1hwRnlPT3hwYUZEY0pWYUFpRjVMdXc0M2lnT21WMjlMTFhSRUtyT05zUDZUYWs4cUcwUzlidlJLZHFnSUFBQT09In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["test"],"name":[1],"type":["chr"],"align":["left"]},{"label":["replications"],"name":[2],"type":["int"],"align":["right"]},{"label":["user.self"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["sys.self"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["elapsed"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"Base R","2":"1000","3":"0.220","4":"0.027","5":"0.247","_rn_":"2"},{"1":"data.table","2":"1000","3":"0.354","4":"0.029","5":"0.383","_rn_":"3"},{"1":"First try","2":"1000","3":"1.341","4":"0.067","5":"1.407","_rn_":"1"}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[3]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiQWR2ZW50IG9mIENvZGUgMjAyMSAtIERheSAxIgphdXRob3I6ICJHdXMgTGlwa2luIH4gZ2l0aHViLmNvbS9ndXNsaXBraW4vQWR2ZW50T2ZDb2RlMjAyMSIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CmxpYnJhcnkodGlkeXZlcnNlKQpsaWJyYXJ5KGRhdGEudGFibGUpCmBgYAoKYGBge3J9CmR0IDwtIGRhdGEudGFibGUocmVhZC50YWJsZSgiaW5wdXQudHh0Iiwgc2VwID0gIlxuIikpCmhlYWQoZHQpCmBgYAoKYGBge3J9CiMgcGFydCAxCmR0JGRpZmYgPC0gYygwLCBkaWZmKGR0JFYxKSkKZHQgJT4lCiAgZmlsdGVyKGRpZmYgPiAwKSAlPiUKICBucm93KCkKYGBgCgoKYGBge3J9CiMgcGFydCAyCmR0JGRpZmYgPC0gYygwLCAwLCAwLCBkaWZmKGR0JFYxLCBsYWcgPSAzKSkKZHQgJT4lCiAgZmlsdGVyKGRpZmYgPiAwKSAlPiUKICBucm93KCkKYGBgCgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiQWR2ZW50IG9mIENvZGUgMjAyMSAtIERheSAxIFNwZWVkIEVkaXRpb24iCmF1dGhvcjogIkd1cyBMaXBraW4gfiBnaXRodWIuY29tL2d1c2xpcGtpbi9BZHZlbnRPZkNvZGUyMDIxIgpvdXRwdXQ6CiAgaHRtbF9ub3RlYm9vazogZGVmYXVsdAogIHBkZl9kb2N1bWVudDogZGVmYXVsdAotLS0KCmBgYHtyfQojIGZhc3Rlc3Qgc29sdXRpb24KIyBkYXRhLnRhYmxlIHdhcyBmYXN0ZXIgdW50aWwgSSB0dXJuZWQgb24gd2Fybj1GQUxTRSBpbiByZWFkTGluZXMgZm9yIEJhc2UgUgpkdCA8LSBhcy5udW1lcmljKHJlYWRMaW5lcygiaW5wdXQudHh0Iiwgd2FybiA9IEZBTFNFKSkKIyBwYXJ0IDEKc3VtKGRpZmYoZHQsIGxhZyA9IDEpID4gMCkKIyBwYXJ0IDIKc3VtKGRpZmYoZHQsIGxhZyA9IDMpID4gMCkKYGBgCgpgYGB7ciBtZXNzYWdlPUZBTFNFfQpyYmVuY2htYXJrOjpiZW5jaG1hcmsoCiAgIkZpcnN0IHRyeSIgPSB7CiAgICBsaWJyYXJ5KHRpZHl2ZXJzZSkKICAgIGxpYnJhcnkoZGF0YS50YWJsZSkKICAgIGR0IDwtIGRhdGEudGFibGUocmVhZC50YWJsZSgiaW5wdXQudHh0Iiwgc2VwID0gIlxuIikpCiAgICAjIHBhcnQgMQogICAgZHQkZGlmZiA8LSBjKDAsIGRpZmYoZHQkVjEpKQogICAgZHQgJT4lIGZpbHRlcihkaWZmID4gMCkgJT4lIG5yb3coKQogICAgIyBwYXJ0IDIKICAgIGR0JGRpZmYgPC0gYygwLCAwLCAwLCBkaWZmKGR0JFYxLCBsYWcgPSAzKSkKICAgIGR0ICU+JSBmaWx0ZXIoZGlmZiA+IDApICU+JSBucm93KCkKICAgIH0sCiAgIkJhc2UgUiIgPSB7CiAgICBkdCA8LSBhcy5udW1lcmljKHJlYWRMaW5lcygiaW5wdXQudHh0Iiwgd2FybiA9IEZBTFNFKSkKICAgICMgcGFydCAxCiAgICBzdW0oZGlmZihkdCwgbGFnID0gMSkgPiAwKQogICAgIyBwYXJ0IDIKICAgIHN1bShkaWZmKGR0LCBsYWcgPSAzKSA+IDApCiAgICB9LAogICJkYXRhLnRhYmxlIiA9IHsKICAgICMgcGFydCAxIGFuZCAyCiAgICBkYXRhLnRhYmxlOjpmcmVhZCgiaW5wdXQudHh0IiwgCiAgICAgICAgICAgICAgICAgICAgICBzZXAgPSAiXG4iKVssIC4oZGlmZjEgPSBzdW0oZGlmZihWMSwgbGFnID0gMSkgPiAwKSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBkaWZmMyA9IHN1bShkaWZmKFYxLCBsYWcgPSAzKSA+IDApKV0KICB9LAogIHJlcGxpY2F0aW9ucyA9IDEwMDAsIGNvbHVtbnMgPSBjKDE6NSksIG9yZGVyID0gInVzZXIuc2VsZiIpCmBgYAoK</div>
 
 
 
@@ -1862,7 +1871,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("AoC2021-Day01.Rmd");
+  window.initializeSourceEmbed("AoC2021-Day01-SpeedEdition.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>
