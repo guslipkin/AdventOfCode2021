@@ -57,13 +57,13 @@ rbenchmark::benchmark(
     o * c
     
     # part 2
-    dtM <- data.frame(fread("input.txt", sep = "\n", 
+    dtM <- data.frame(fread("input.txt", sep = "\n",
                             colClasses = c("character")))
-    dtM <- tidyr::separate(dtM, "V1", paste0("V", 1:13), 
+    dtM <- tidyr::separate(dtM, "V1", paste0("V", 1:13),
                            sep = "", convert = TRUE)
     dtM <- dtM %>% select(-"V1")
     dt <- dtM
-    
+
     get_modeMax <- function(x) {
       temp <- sort(table(x), decreasing = T, na.last = T)
       ifelse(temp[1] == temp[2], return(1), names(temp[1]))
@@ -76,7 +76,7 @@ rbenchmark::benchmark(
         break
       }
     }
-    
+
     dt <- dtM
     get_modeMin <- function(x) {
       temp <- sort(table(x), na.last = T)
@@ -90,7 +90,7 @@ rbenchmark::benchmark(
         break
       }
     }
-    
+
     unbinary(oxygen) * unbinary(co2)
     },
     "Second try" = {
@@ -99,10 +99,9 @@ rbenchmark::benchmark(
     library(compositions)
     
     # part 1
-    dt <- data.frame(fread("input.txt", sep = "\n", 
-                           colClasses = c("character")))
-    dt <- tidyr::separate(dt, "V1", paste0("V", 1:13), 
-                          sep = "", convert = TRUE) %>%
+    dt <- fread("input.txt", sep = "\n", colClasses = c("character")) %>%
+      as.data.frame() %>%
+      tidyr::separate("V1", paste0("V", 1:13), sep = "", convert = TRUE) %>%
       select(-"V1")
     
     getModeMin <- function(x)
@@ -116,14 +115,14 @@ rbenchmark::benchmark(
     
     o * c
     
-    # part 2
+    # # part 2
     dtM <- fread("input.txt", sep = "\n", colClasses = c("character")) %>%
-      as.data.frame() %>% 
-      tidyr::separate("V1", paste0("V", 1:13), sep = "", convert = TRUE) %>% 
+      as.data.frame() %>%
+      tidyr::separate("V1", paste0("V", 1:13), sep = "", convert = TRUE) %>%
       select(-"V1")
     dto <- dtM
     dtc <- dtM
-    
+
     getModeMin <- function(x) {
       temp <- sort(table(x), na.last = T)
       ifelse(temp[1] == temp[2], return(0), names(temp[1]))
@@ -132,7 +131,7 @@ rbenchmark::benchmark(
       temp <- sort(table(x), decreasing = T, na.last = T)
       ifelse(temp[1] == temp[2], return(1), names(temp[1]))
     }
-    
+
     for (i in 1:12) {
       if(nrow(dto) > 1)
         dto <- dto %>% filter_at(i, all_vars(. == getModeMax(dto[, i])))
@@ -144,7 +143,7 @@ rbenchmark::benchmark(
         break
       }
     }
-    
+
     unbinary(oxygen) * unbinary(co2)
     },
   replications = 10, columns = c(1:5), order = "user.self")
