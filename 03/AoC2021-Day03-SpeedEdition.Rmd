@@ -4,25 +4,45 @@ author: "Gus Lipkin ~ github.com/guslipkin/AdventOfCode2021"
 output:
   pdf_document: default
   html_notebook: default
+  html_document:
+    df_print: paged
 ---
+
+> Today was bad. I misread the instructions, forgot a bunch of basic functions, and so much more. I couldn't get any of the base reading functions to read my input properly so I ended up with `fread` from `data.table`. I also haven't been able to make any significant speed improvements from my initial solution.
 
 # Fastest solution
 
 ```{r}
-dtM <- data.frame("V1" = readLines("input.txt"))
-dtM <- tidyr::separate(dtM, "V1", c("d", "n"), sep = " ", convert = TRUE)
-
+library(dplyr)
 # part 1
-dt <- dtM
-dt$n <- ifelse(dt$d == "down", dt$n * -1, dt$n)
-abs(sum(dt$n[dt$d == "forward"]) * sum(dt$n[dt$d != "forward"]))
+dt <- data.table::fread("input.txt", sep = "\n", 
+                        colClasses = "character", data.table = FALSE) |>
+  tidyr::separate(col = "V1", paste0("V", 1:13), sep = "", convert = TRUE) |>
+  select(-"V1")
+
+getModeMin <- function(x)
+  return(ifelse(mean(x) > .5, 0, 1))
+getModeMax <- function(x)
+  return(ifelse(mean(x) > .5, 1, 0))
+
+strtoi(paste(apply(dt, 2, getModeMax), collapse = ""), base = 2) *
+  strtoi(paste(apply(dt, 2, getModeMin), collapse = ""), base = 2)
 
 # part 2
-dt <- dtM
-dt$aim <- cumsum(ifelse(dt$d == "up", dt$n * -1, 
-                        ifelse(dt$d == "forward", 0, dt$n)))
-sum(ifelse(dt$d == "forward", dt$n, 0), na.rm = TRUE) *
-  sum(ifelse(dt$d == "forward", dt$aim * dt$n, 0), na.rm = TRUE)
+dto <- dt
+dtc <- dt
+
+for (i in 1:12) {
+  if (nrow(dto) > 1)
+    dto <- dto |>
+      filter_at(i, all_vars(. == ifelse(mean(dto[, i]) >= .5, 1, 0)))
+  if (nrow(dtc) > 1)
+    dtc <- dtc |>
+      filter_at(i, all_vars(. == ifelse(mean(dtc[, i]) < .5, 1, 0)))
+}
+
+strtoi(paste(as.character(dto[1,]), collapse = ""), base = 2) *
+  strtoi(paste(as.character(dtc[1,]), collapse = ""), base = 2)
 ```
 
 # Benchmark
@@ -115,7 +135,7 @@ rbenchmark::benchmark(
     
     o * c
     
-    # # part 2
+    # part 2
     dtM <- fread("input.txt", sep = "\n", colClasses = c("character")) %>%
       as.data.frame() %>%
       tidyr::separate("V1", paste0("V", 1:13), sep = "", convert = TRUE) %>%
@@ -146,6 +166,38 @@ rbenchmark::benchmark(
 
     unbinary(oxygen) * unbinary(co2)
     },
-  replications = 10, columns = c(1:5), order = "user.self")
+  "Third try" = {
+    library(dplyr)
+    # part 1
+    dt <- data.table::fread("input.txt", sep = "\n", colClasses = "character", 
+                            data.table = FALSE) |>
+      tidyr::separate("V1", paste0("V", 1:13), sep = "", convert = TRUE) |>
+      select(-"V1")
+    
+    getModeMin <- function(x)
+      return(ifelse(mean(x) > .5, 0, 1))
+    getModeMax <- function(x)
+      return(ifelse(mean(x) > .5, 1, 0))
+    
+    strtoi(paste(apply(dt, 2, getModeMax), collapse = ""), base = 2) * 
+      strtoi(paste(apply(dt, 2, getModeMin), collapse = ""), base = 2)
+    
+    # part 2
+    dto <- dt
+    dtc <- dt
+
+    for (i in 1:12) {
+      if(nrow(dto) > 1)
+        dto <- dto |>
+          filter_at(i, all_vars(. == ifelse(mean(dto[, i]) >= .5, 1, 0)))
+      if(nrow(dtc) > 1)
+        dtc <- dtc |>
+          filter_at(i, all_vars(. == ifelse(mean(dtc[, i]) < .5, 1, 0)))
+    }
+    
+    strtoi(paste(as.character(dto[1, ]), collapse = ""), base = 2) * 
+      strtoi(paste(as.character(dtc[1, ]), collapse = ""), base = 2)
+    },
+  replications = 1000, columns = c(1:5), order = "user.self")
 ```
 
