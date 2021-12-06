@@ -3,6 +3,8 @@ title: "Advent of Code 2021 - Day 2 Speed Edition"
 author: "Gus Lipkin ~ github.com/guslipkin/AdventOfCode2021"
 output:
   pdf_document: default
+  html_document:
+    df_print: paged
   html_notebook: default
 ---
 
