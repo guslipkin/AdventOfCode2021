@@ -5,25 +5,34 @@ output: html_notebook
 ---
 
 ```{r}
-library(tidyverse)
-library(data.table)
-library(stringr)
-```
-
-```{r}
 # part 1
-dt2 <- as.numeric(unlist(str_split(readLines("input.txt"), ",")))
-for(d in 1:80) {
-  dt2 <- dt2 - 1
-    dt2 <- append(dt2, rep(8, sum(dt2 == -1)))
-    dt2[dt2 == -1] <- 6
-}
-length(dt2)
+dt2 <- as.numeric(data.table::fread("input.txt", header = FALSE)[1])
+
+t <- table(dt2)
+v <- c(0, 0, t, rep(0, 8 - length(t)))
+
+for(i in 1:80)
+  v <- c(v[2:7], v[8] + v[1], v[9:10], v[2])
+sum(v)
 ```
 
 ```{r}
 # part 2
-dt2 <- as.numeric(unlist(str_split(readLines("input.txt"), ",")))
+dt2 <- as.numeric(data.table::fread("input.txt", header = FALSE)[1])
+
+t <- table(dt2)
+v <- c(0, 0, t, rep(0, 8 - length(t)))
+
+for(i in 1:256)
+  v <- c(v[2:7], v[8] + v[1], v[9:10], v[2])
+options(scipen=999)
+sum(v)
+```
+
+
+```{r}
+# part 2
+# dt2 <- as.numeric(unlist(str_split(readLines("input.txt"), ",")))
 
 # none of these will work without lots and lots of ram and time
 # data.table::fwrite(list(dt2), "dt2.csv")
@@ -63,44 +72,5 @@ dt2 <- as.numeric(unlist(str_split(readLines("input.txt"), ",")))
 #   }
 # }
 # length(dt2)
-
-dt <- data.frame("m" = 0,
-                 "zero" = 0,
-                 "one" = 0,
-                 "two" = 0,
-                 "three" = 0,
-                 "four" = 0,
-                 "five" = 0,
-                 "six" = 0,
-                 "seven" = 0,
-                 "eight" = 0)
-
-for(i in 1:length(dt2)) {
-  if(dt2[i] == 0) {dt$zero[1] <- dt$zero[1] + 1}
-  if(dt2[i] == 1) {dt$one[1] <- dt$one[1] + 1}
-  if(dt2[i] == 2) {dt$two[1] <- dt$two[1] + 1}
-  if(dt2[i] == 3) {dt$three[1] <- dt$three[1] + 1}
-  if(dt2[i] == 4) {dt$four[1] <- dt$four[1] + 1}
-  if(dt2[i] == 5) {dt$five[1] <- dt$five[1] + 1}
-  if(dt2[i] == 6) {dt$six[1] <- dt$six[1] + 1}
-  if(dt2[i] == 7) {dt$seven[1] <- dt$seven[1] + 1}
-  if(dt2[i] == 8) {dt$eight[1] <- dt$eight[1] + 1}
-}
-
-for(i in 1:255) {
-  dt$zero[1] <- dt$one[1]
-  dt$one[1] <- dt$two[1]
-  dt$two[1] <- dt$three[1]
-  dt$three[1] <- dt$four[1]
-  dt$four[1] <- dt$five[1]
-  dt$five[1] <- dt$six[1]
-  dt$six[1] <- dt$seven[1] + dt$m[1]
-  dt$seven[1] <- dt$eight[1]
-  
-  dt$eight[1] <- dt$m[1]
-  dt$m[1] <- dt$zero[1]
-}
-options(scipen=999)
-sum(dt[1,])
 ```
 
