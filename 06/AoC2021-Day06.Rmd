@@ -1,0 +1,106 @@
+---
+title: "Advent of Code 2021 - Day 6"
+author: "Gus Lipkin ~ github.com/guslipkin/AdventOfCode2021"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(data.table)
+library(stringr)
+```
+
+```{r}
+# part 1
+dt <- as.numeric(unlist(str_split(readLines("input.txt"), ",")))
+dt2 <- dt
+
+for(d in 1:80) {
+  dt2 <- dt2 - 1
+    dt2 <- append(dt2, rep(8, sum(dt2 == -1)))
+    dt2[dt2 == -1] <- 6
+}
+length(dt2)
+```
+
+```{r}
+# part 2
+dt <- as.numeric(unlist(str_split(readLines("input2.txt"), ",")))
+dt2 <- dt
+# data.table::fwrite(list(dt2), "dt2.csv")
+# for(d in 1:256) {
+#   dt2 <- as.numeric(data.table::fread("dt2.csv")[[1]])
+#   dt2 <- dt2 - 1
+#   if(sum(dt2 == -1) > 0) {
+#     dt2 <- append(dt2, rep(8, sum(dt2 == -1)))
+#     dt2[dt2 == -1] <- 6
+#   }
+#   data.table::fwrite(list(dt2), "dt2.csv")
+#   gc()
+#   rm(dt2)
+# }
+# length(dt2)
+# fish <- function(x, y) {
+#   if(y == 0) {
+#     return(length(x))
+#   } else {
+#   x <- x - 1
+#   x <- append(x, rep(8, sum(x == -1)))
+#   x[x == -1] <- 6
+#   return(fish(x, y - 1))
+#   }
+# }
+
+# length(fish(dt2, 256))
+# for(d in 1:256) {
+#   l <- length(dt2)
+#   for(i in 1:l) {
+#     if(dt2[i] == 0) {
+#       dt2[i] <- 6
+#       dt2 <- append(dt2, 8)
+#     } else {
+#       dt2[i] <- dt2[i] - 1
+#     }
+#   }
+# }
+# length(dt2)
+
+table(dt2)
+
+dt <- data.frame("m" = 0,
+                 "zero" = 0,
+                 "one" = 0,
+                 "two" = 0,
+                 "three" = 0,
+                 "four" = 0,
+                 "five" = 0,
+                 "six" = 0,
+                 "sexven" = 0,
+                 "eight" = 0)
+
+# for(i in 1:length(dt2)) {
+#   if(dt2[i] == 0) {dt$zero[1] <- dt$zero[1] + 1}
+#   if(dt2[i] == 1) {dt$one[1] <- dt$one[1] + 1}
+#   if(dt2[i] == 2) {dt$two[1] <- dt$two[1] + 1}
+#   if(dt2[i] == 3) {dt$three[1] <- dt$three[1] + 1}
+#   if(dt2[i] == 4) {dt$four[1] <- dt$four[1] + 1}
+#   if(dt2[i] == 5) {dt$five[1] <- dt$five[1] + 1}
+#   if(dt2[i] == 6) {dt$six[1] <- dt$six[1] + 1}
+#   if(dt2[i] == 7) {dt$seven[1] <- dt$seven[1] + 1}
+#   if(dt2[i] == 8) {dt$eight[1] <- dt$eight[1] + 1}
+# }
+for(i in 1:80) {
+  {dt$m[1] <- dt$m[1] - 1; dt$eight[1] <- dt$eight[1] + 1}
+  {dt$zero[1] <- dt$zero[1] - 1; dt$six[1] <- dt$six[1] + 1;}
+  {dt$one[1] <- dt$one[1] - 1; dt$zero[1] <- dt$zero[1] + 1;}
+  {dt$two[1] <- dt$two[1] - 1; dt$one[1] <- dt$one[1] - 1;}
+  {dt$three[1] <- dt$three[1] - 1; dt$two[1] <- dt$two[1] - 1;}
+  {dt$four[1] <- dt$four[1] - 1; dt$three[1] <- dt$three[1] - 1;}
+  {dt$five[1] <- dt$five[1] - 1; dt$four[1] <- dt$four[1] - 1;}
+  {dt$six[1] <- dt$six[1] - 1; dt$five[1] <- dt$five[1] - 1;}
+  {dt$seven[1] <- dt$seven[1] - 1; dt$six[1] <- dt$six[1] - 1;}
+  {dt$eight[1] <- dt$eight[1] - 1; dt$eight[1] <- dt$eight[1] - 1;}
+}
+sum(dt[1,])
+```
+
