@@ -17,15 +17,18 @@ output:
 dt2 <- as.numeric(data.table::fread("input.txt", header = FALSE)[1])
 
 t <- table(dt2)
-v <- c(0, 0, t, rep(0, 8 - length(t)))
+fishTable <- c(0, 0, t, rep(0, 8 - length(t)))
 
-for (i in 1:256) {
-  v <- c(v[2:7], v[8] + v[1], v[9:10], v[2])
-  if (i == 80)
+fish <- function(v, d) {
+  if (d == 0) {
+    options(scipen = 999)
+    return(sum(v))
+  }
+  if (d == (256 - 80))
     print(sum(v))
+  fish(c(v[2:7], v[8] + v[1], v[9:10], v[2]), d - 1)
 }
-options(scipen = 999)
-sum(v)
+fish(fishTable, 256)
 ```
 
 # Benchmark
@@ -119,6 +122,24 @@ bench <- rbenchmark::benchmark(
       options(scipen = 999)
       s <- sum(v)
     }, 
+  "With recursion!" = {
+    # part 1 and 2
+    dt2 <- as.numeric(data.table::fread("input.txt", header = FALSE)[1])
+    
+    t <- table(dt2)
+    fishTable <- c(0, 0, t, rep(0, 8 - length(t)))
+
+    fish <- function(v, d) {
+      if (d == 0) {
+        options(scipen = 999)
+        return(sum(v))
+      }
+      if (d == (256 - 80))
+        s <- sum(v)
+      fish(c(v[2:7], v[8] + v[1], v[9:10], v[2]), d - 1)
+    }
+    s <- fish(fishTable, 256)
+  }, 
   replications = 1000, columns = c(1:5), order = "user.self")
 
 bench$per <- bench$user.self / bench$replications
