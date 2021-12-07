@@ -12,7 +12,7 @@
 <meta name="author" content="Gus Lipkin ~ github.com/guslipkin/AdventOfCode2021" />
 
 
-<title>Advent of Code 2021 - Day 7</title>
+<title>Advent of Code 2021 - Day 7 Speed Edition</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1755,158 +1755,142 @@ pre code {
 
 
 
-<h1 class="title toc-ignore">Advent of Code 2021 - Day 7</h1>
+<h1 class="title toc-ignore">Advent of Code 2021 - Day 7 Speed Edition</h1>
 <h4 class="author">Gus Lipkin ~ github.com/guslipkin/AdventOfCode2021</h4>
 
 </div>
 
 
 <!-- rnb-text-begin -->
+<blockquote>
+<p>Please don’t look at this. It’s embarrassing.</p>
+<p>I only did one rep because my first try is too slow.</p>
+</blockquote>
+<div id="fastest-solution" class="section level1">
+<h1>Fastest solution</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShzdHJpbmdyKVxubGlicmFyeSh0aWR5dmVyc2UpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShzdHJpbmdyKVxubGlicmFyeSh0aWR5dmVyc2UpXG5saWJyYXJ5KGRhdGEudGFibGUpXG5cblxuZHQgPC0gYXMubnVtZXJpYyhkYXRhLnRhYmxlOjpmcmVhZChcImlucHV0LnR4dFwiLCBoZWFkZXIgPSBGQUxTRSlbMV0pXG4jIHBhcnQgMVxucyA8LSBtYXgoZHQpIF4gbGVuZ3RoKGR0KVxuZm9yIChpIGluLWNlaWxpbmcobWF4KGR0KSAvIDIpOmNlaWxpbmcobWF4KGR0KSAvIDIpKSB7XG4gIGR0MiA8LVxuICAgIGRhdGEudGFibGUoXCJzdGFydFwiID0gZHQpWywgbWVhbiA6PSBmbG9vcihtZWFuKHN0YXJ0KSldWywgZGlmZiA6PSBhYnMoc3RhcnQgLSBtZWFuIC0gaSldXG4gIGR0RGlmZiA8LSBzdW0oZHQyJGRpZmYpXG4gIHMgPC0gZGF0YS50YWJsZTo6ZmlmZWxzZShkdERpZmYgPCBzLCBkdERpZmYsIHMpXG59XG5zIDwtIGMocylcblxuIyBwYXJ0IDJcbmNTdW0gPC0gZnVuY3Rpb24oeSkge1xuICBldmFsKHBhcnNlKHRleHQgPSB5KSlcbn1cbmR0MiA8LSBkYXRhLnRhYmxlKFwic3RhcnRcIiA9IGR0KVxuZHQyWywgbWVhbiA6PSBtZWFuKGR0MiRzdGFydCwgbmEucm0gPSBUUlVFKV1cbmR0MiRhYnMgPC0gYWJzKGR0MiRzdGFydCAtIGR0MiRtZWFuKVxuZHQyJG1lYW5DIDwtIGNlaWxpbmcoZHQyJG1lYW4pXG5kdDIkbWVhbkYgPC0gZmxvb3IoZHQyJG1lYW4pXG5kdDIkYWJzQyA8LSBhYnMoZHQyJHN0YXJ0IC0gZHQyJG1lYW5DKVxuZHQyJGFic0YgPC0gYWJzKGR0MiRzdGFydCAtIGR0MiRtZWFuRilcbmR0MiRkaWZmQyA8LSBzYXBwbHkocGFzdGUwKFwic3VtKDE6XCIsIGR0MiRhYnNDLCBcIilcIiksIGNTdW0pXG5kdDIkZGlmZkYgPC0gc2FwcGx5KHBhc3RlMChcInN1bSgxOlwiLCBkdDIkYWJzRiwgXCIpXCIpLCBjU3VtKVxucyA8LSBtaW4oc3VtKGR0MiRkaWZmQyksIHN1bShkdDIkZGlmZkYpKVxuYGBgIn0= -->
 <pre class="r"><code>library(stringr)
-library(tidyverse)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUmVnaXN0ZXJlZCBTMyBtZXRob2RzIG92ZXJ3cml0dGVuIGJ5ICdkYnBseXInOlxuICBtZXRob2QgICAgICAgICBmcm9tXG4gIHByaW50LnRibF9sYXp5ICAgICBcbiAgcHJpbnQudGJsX3NxbCAgICAgIFxu4pSA4pSAIEF0dGFjaGluZyBwYWNrYWdlcyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAgdGlkeXZlcnNlIDEuMy4xIOKUgOKUgFxu4pyTIGdncGxvdDIgMy4zLjUgICAgIOKckyBwdXJyciAgIDAuMy40XG7inJMgdGliYmxlICAzLjEuNiAgICAg4pyTIGRwbHlyICAgMS4wLjdcbuKckyB0aWR5ciAgIDEuMS40ICAgICDinJMgZm9yY2F0cyAwLjUuMVxu4pyTIHJlYWRyICAgMi4xLjEgICAgIFxu4pSA4pSAIENvbmZsaWN0cyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAgdGlkeXZlcnNlX2NvbmZsaWN0cygpIOKUgOKUgFxueCBkcGx5cjo6ZmlsdGVyKCkgbWFza3Mgc3RhdHM6OmZpbHRlcigpXG54IGRwbHlyOjpsYWcoKSAgICBtYXNrcyBzdGF0czo6bGFnKClcbiJ9 -->
-<pre><code>Registered S3 methods overwritten by &#39;dbplyr&#39;:
-  method         from
-  print.tbl_lazy     
-  print.tbl_sql      
-── Attaching packages ───────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.1 ──
-✓ ggplot2 3.3.5     ✓ purrr   0.3.4
-✓ tibble  3.1.6     ✓ dplyr   1.0.7
-✓ tidyr   1.1.4     ✓ forcats 0.5.1
-✓ readr   2.1.1     
-── Conflicts ──────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-x dplyr::filter() masks stats::filter()
-x dplyr::lag()    masks stats::lag()</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShkYXRhLnRhYmxlKVxuYGBgIn0= -->
-<pre class="r"><code>library(data.table)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiZGF0YS50YWJsZSAxLjE0LjIgdXNpbmcgMSB0aHJlYWRzIChzZWUgP2dldERUdGhyZWFkcykuICBMYXRlc3QgbmV3czogci1kYXRhdGFibGUuY29tXG4qKioqKioqKioqXG5UaGlzIGluc3RhbGxhdGlvbiBvZiBkYXRhLnRhYmxlIGhhcyBub3QgZGV0ZWN0ZWQgT3Blbk1QIHN1cHBvcnQuIEl0IHNob3VsZCBzdGlsbCB3b3JrIGJ1dCBpbiBzaW5nbGUtdGhyZWFkZWQgbW9kZS5cblRoaXMgaXMgYSBNYWMuIFBsZWFzZSByZWFkIGh0dHBzOi8vbWFjLnItcHJvamVjdC5vcmcvb3Blbm1wLy4gUGxlYXNlIGVuZ2FnZSB3aXRoIEFwcGxlIGFuZCBhc2sgdGhlbSBmb3Igc3VwcG9ydC4gQ2hlY2sgci1kYXRhdGFibGUuY29tIGZvciB1cGRhdGVzLCBhbmQgb3VyIE1hYyBpbnN0cnVjdGlvbnMgaGVyZTogaHR0cHM6Ly9naXRodWIuY29tL1JkYXRhdGFibGUvZGF0YS50YWJsZS93aWtpL0luc3RhbGxhdGlvbi4gQWZ0ZXIgc2V2ZXJhbCB5ZWFycyBvZiBtYW55IHJlcG9ydHMgb2YgaW5zdGFsbGF0aW9uIHByb2JsZW1zIG9uIE1hYywgaXQncyB0aW1lIHRvIGdpbmdlcmx5IHBvaW50IG91dCB0aGF0IHRoZXJlIGhhdmUgYmVlbiBubyBzaW1pbGFyIHByb2JsZW1zIG9uIFdpbmRvd3Mgb3IgTGludXguXG4qKioqKioqKioqXG5cbkF0dGFjaGluZyBwYWNrYWdlOiDigJhkYXRhLnRhYmxl4oCZXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0cyBhcmUgbWFza2VkIGZyb20g4oCYcGFja2FnZTpkcGx5cuKAmTpcblxuICAgIGJldHdlZW4sIGZpcnN0LCBsYXN0XG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0IGlzIG1hc2tlZCBmcm9tIOKAmHBhY2thZ2U6cHVycnLigJk6XG5cbiAgICB0cmFuc3Bvc2VcbiJ9 -->
-<pre><code>data.table 1.14.2 using 1 threads (see ?getDTthreads).  Latest news: r-datatable.com
-**********
-This installation of data.table has not detected OpenMP support. It should still work but in single-threaded mode.
-This is a Mac. Please read https://mac.r-project.org/openmp/. Please engage with Apple and ask them for support. Check r-datatable.com for updates, and our Mac instructions here: https://github.com/Rdatatable/data.table/wiki/Installation. After several years of many reports of installation problems on Mac, it&#39;s time to gingerly point out that there have been no similar problems on Windows or Linux.
-**********
+library(tidyverse)
+library(data.table)
 
-Attaching package: ‘data.table’
 
-The following objects are masked from ‘package:dplyr’:
-
-    between, first, last
-
-The following object is masked from ‘package:purrr’:
-
-    transpose</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBkdCA8LSBmcmVhZChcImlucHV0LnR4dFwiLCBoZWFkZXIgPSBGQUxTRSlcbmR0IDwtIGFzLm51bWVyaWMoZGF0YS50YWJsZTo6ZnJlYWQoXCJpbnB1dC50eHRcIiwgaGVhZGVyID0gRkFMU0UpWzFdKVxuXG4jIHBhcnQgMVxucmJlbmNobWFyazo6YmVuY2htYXJrKFwiZmlyc3RcIiA9IHtcbiAgZHQyIDwtIGRhdGEudGFibGUoXCJzdGFydFwiID0gZHQpXG4gIHMgPC0gYygpXG4gIGZvciAoaSBpbiAtbWF4KGR0KTptYXgoZHQpKSB7XG4gICAgZHQyIDwtIGRhdGEudGFibGUoXCJzdGFydFwiID0gZHQpXG4gICAgZHQyWywgbWVhbiA6PSBmbG9vcihtZWFuKHN0YXJ0KSldWywgZGlmZiA6PSBhYnMoc3RhcnQgLSBtZWFuICsgaSldXG4gICAgcyA8LSBhcHBlbmQocywgc3VtKGR0MiRkaWZmKSlcbiAgfVxuICBzIDwtIG1pbihzKVxufSxcblwic2Vjb25kXCIgPSB7XG4gICMgcGFydCAxXG4gIGR0MiA8LSBkYXRhLnRhYmxlKFwic3RhcnRcIiA9IGR0KVxuICBzIDwtIGMoKVxuICBmb3IgKGkgaW4gMTpjZWlsaW5nKG1heChkdCkgLyAyKSkge1xuICAgIGR0MiA8LSBkYXRhLnRhYmxlKFwic3RhcnRcIiA9IGR0KVxuICAgIGR0MlssIG1lYW4gOj0gZmxvb3IobWVhbihzdGFydCkpXVssIGRpZmYgOj0gYWJzKHN0YXJ0IC0gbWVhbiArIGkpXVxuICAgIHMgPC0gYXBwZW5kKHMsIHN1bShkdDIkZGlmZikpXG4gIH1cbiAgcyA8LSBtaW4ocylcbn0sXG5yZXBsaWNhdGlvbnMgPSAxMClcbmBgYCJ9 -->
-<pre class="r"><code># dt &lt;- fread(&quot;input.txt&quot;, header = FALSE)
 dt &lt;- as.numeric(data.table::fread(&quot;input.txt&quot;, header = FALSE)[1])
-
 # part 1
-rbenchmark::benchmark(&quot;first&quot; = {
-  dt2 &lt;- data.table(&quot;start&quot; = dt)
-  s &lt;- c()
-  for (i in -max(dt):max(dt)) {
-    dt2 &lt;- data.table(&quot;start&quot; = dt)
-    dt2[, mean := floor(mean(start))][, diff := abs(start - mean + i)]
-    s &lt;- append(s, sum(dt2$diff))
-  }
-  s &lt;- min(s)
-},
-&quot;second&quot; = {
-  # part 1
-  dt2 &lt;- data.table(&quot;start&quot; = dt)
-  s &lt;- c()
-  for (i in 1:ceiling(max(dt) / 2)) {
-    dt2 &lt;- data.table(&quot;start&quot; = dt)
-    dt2[, mean := floor(mean(start))][, diff := abs(start - mean + i)]
-    s &lt;- append(s, sum(dt2$diff))
-  }
-  s &lt;- min(s)
-},
-replications = 10)</code></pre>
+s &lt;- max(dt) ^ length(dt)
+for (i in-ceiling(max(dt) / 2):ceiling(max(dt) / 2)) {
+  dt2 &lt;-
+    data.table(&quot;start&quot; = dt)[, mean := floor(mean(start))][, diff := abs(start - mean - i)]
+  dtDiff &lt;- sum(dt2$diff)
+  s &lt;- data.table::fifelse(dtDiff &lt; s, dtDiff, s)
+}
+s &lt;- c(s)
+
+# part 2
+cSum &lt;- function(y) {
+  eval(parse(text = y))
+}
+dt2 &lt;- data.table(&quot;start&quot; = dt)
+dt2[, mean := mean(dt2$start, na.rm = TRUE)]
+dt2$abs &lt;- abs(dt2$start - dt2$mean)
+dt2$meanC &lt;- ceiling(dt2$mean)
+dt2$meanF &lt;- floor(dt2$mean)
+dt2$absC &lt;- abs(dt2$start - dt2$meanC)
+dt2$absF &lt;- abs(dt2$start - dt2$meanF)
+dt2$diffC &lt;- sapply(paste0(&quot;sum(1:&quot;, dt2$absC, &quot;)&quot;), cSum)
+dt2$diffF &lt;- sapply(paste0(&quot;sum(1:&quot;, dt2$absF, &quot;)&quot;), cSum)
+s &lt;- min(sum(dt2$diffC), sum(dt2$diffF))</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MiwibmNvbCI6OCwic3VtbWFyeSI6eyJEZXNjcmlwdGlvbiI6WyJkZiBbMiDDlyA4XSJdfX0sInJkZiI6Ikg0c0lBQUFBQUFBQUEzV1N1MDdETUJTR1Q5S2tUU0phS3VBWllHb2t4QUpUT25BWmtSQklYZDNFcFFialJIWmFMa0s4QVFNVE15L1FoY3ZFd0loNEFCWlllQUFrVnBhQ2s5aUZGbUhweU9mL2N1eWMzL2JXYW12SmEza0FVQUxMTUtCa3l4VHNuZTMxeGpLQVpVcGhnQVZ1TmgvSm9sbVpPRExxTWt6MXdlNFFMbElseWdLSE1ZdGtWczFMQUR3VnRVdzNGNjd2MXE2ZUhwcmwrNzJ6enhjWThmcGc3dVJ0WXhCOGdCNEZueC8ySDI5V1dzM3lETHM4MzN6VlBIak9hTDBkM0Fhbjd4ZmRSSFA0Ty83aFk5NXNoZzZ3VUw0Y0JhMFVqMnhOY1p4UUVxS1V4RXdvVnNFVUpRSkhTanBjNnBUMHNkSnVUMkR1QzB3N3VrQWNpOS9heXd2Q0xxRjZDemVyS01CNGZ5NlBEMzNkb3o1WW81akhqWVFVQ1cxRVF5OUNLZkk3WEs2WGFqaXhwQkluaFNzd3M5dTFKeFliZkFKTTkxaldTZFFJdXoyMjMxaFUxMnVvcVA1ME5zcWQ0cGZtbDlySzFvOEZzMTNDOUlIWkZMVXhWYUltSGVlRy9ZUVRwcS9CazFUNGFad2lYZWVGTWRVazl3YkRiMkxUY0FmVUFnQUEifQ== -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="benchmark" class="section level1">
+<h1>Benchmark</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYmVuY2ggPC0gcmJlbmNobWFyazo6YmVuY2htYXJrKFxuICBcImZpcnN0XCIgPSB7XG4gICAgbGlicmFyeShzdHJpbmdyKVxuICAgIGxpYnJhcnkodGlkeXZlcnNlKVxuICAgIGxpYnJhcnkoZGF0YS50YWJsZSlcbiAgICBkdCA8LVxuICAgICAgYXMubnVtZXJpYyhkYXRhLnRhYmxlOjpmcmVhZChcImlucHV0LnR4dFwiLCBoZWFkZXIgPSBGQUxTRSlbMV0pXG4gICAgIyBwYXJ0IDFcbiAgICBkdDIgPC0gZGF0YS50YWJsZShcInN0YXJ0XCIgPSBkdClcbiAgICBzIDwtIGMoKVxuICAgIGZvciAoaSBpbi1tYXgoZHQpOm1heChkdCkpIHtcbiAgICAgIGR0MiA8LSBkYXRhLnRhYmxlKFwic3RhcnRcIiA9IGR0KVxuICAgICAgZHQyWywgbWVhbiA6PSBmbG9vcihtZWFuKHN0YXJ0KSldWywgZGlmZiA6PSBhYnMoc3RhcnQgLSBtZWFuICsgaSldXG4gICAgICBzIDwtIGFwcGVuZChzLCBzdW0oZHQyJGRpZmYpKVxuICAgIH1cbiAgICBzIDwtIG1pbihzKVxuICAgIFxuICAgICMgcGFydCAyXG4gICAgZHQyIDwtIGRhdGEudGFibGUoXCJzdGFydFwiID0gZHQpXG4gICAgcyA8LSBjKClcbiAgICBcbiAgICBmb3IgKGkgaW4tbWF4KGR0KTptYXgoZHQpKSB7XG4gICAgICBkdDIgPC0gZGF0YS50YWJsZShcInN0YXJ0XCIgPSBkdClcbiAgICAgIGR0MlssIG1lYW4gOj0gZmxvb3IobWVhbihzdGFydCkpXVxuICAgICAgZm9yIChyIGluIDE6bnJvdyhkdDIpKVxuICAgICAgICBkdDIkZGlmZltyXSA8LSBzdW0oMTooYWJzKGR0MiRzdGFydFtyXSAtIGR0MiRtZWFuW3JdIC0gaSkpKVxuICAgICAgcyA8LSBhcHBlbmQocywgc3VtKGR0MiRkaWZmKSlcbiAgICB9XG4gICAgcyA8LSBtaW4ocylcbiAgfSxcbiAgXCJzZWNvbmRcIiA9IHtcbiAgICBsaWJyYXJ5KHN0cmluZ3IpXG4gICAgbGlicmFyeSh0aWR5dmVyc2UpXG4gICAgbGlicmFyeShkYXRhLnRhYmxlKVxuICAgIGR0IDwtXG4gICAgICBhcy5udW1lcmljKGRhdGEudGFibGU6OmZyZWFkKFwiaW5wdXQudHh0XCIsIGhlYWRlciA9IEZBTFNFKVsxXSlcbiAgICAjIHBhcnQgMVxuICAgIHMgPC0gbWF4KGR0KSBeIGxlbmd0aChkdClcbiAgICBmb3IgKGkgaW4tY2VpbGluZyhtYXgoZHQpIC8gMik6Y2VpbGluZyhtYXgoZHQpIC8gMikpIHtcbiAgICAgIGR0MiA8LVxuICAgICAgICBkYXRhLnRhYmxlKFwic3RhcnRcIiA9IGR0KVssIG1lYW4gOj0gZmxvb3IobWVhbihzdGFydCkpXVssIGRpZmYgOj0gYWJzKHN0YXJ0IC0gbWVhbiAtIGkpXVxuICAgICAgZHREaWZmIDwtIHN1bShkdDIkZGlmZilcbiAgICAgIHMgPC0gZGF0YS50YWJsZTo6ZmlmZWxzZShkdERpZmYgPCBzLCBkdERpZmYsIHMpXG4gICAgfVxuICAgIHMgPC0gYyhzKVxuICAgIFxuICAgIGNTdW0gPC0gZnVuY3Rpb24oeSkge1xuICAgICAgZXZhbChwYXJzZSh0ZXh0ID0geSkpXG4gICAgfVxuICAgIGR0MiA8LSBkYXRhLnRhYmxlKFwic3RhcnRcIiA9IGR0KVxuICAgIGR0MlssIG1lYW4gOj0gbWVhbihkdDIkc3RhcnQsIG5hLnJtID0gVFJVRSldXG4gICAgZHQyJGFicyA8LSBhYnMoZHQyJHN0YXJ0IC0gZHQyJG1lYW4pXG4gICAgZHQyJG1lYW5DIDwtIGNlaWxpbmcoZHQyJG1lYW4pXG4gICAgZHQyJG1lYW5GIDwtIGZsb29yKGR0MiRtZWFuKVxuICAgIGR0MiRhYnNDIDwtIGFicyhkdDIkc3RhcnQgLSBkdDIkbWVhbkMpXG4gICAgZHQyJGFic0YgPC0gYWJzKGR0MiRzdGFydCAtIGR0MiRtZWFuRilcbiAgICBkdDIkZGlmZkMgPC0gc2FwcGx5KHBhc3RlMChcInN1bSgxOlwiLCBkdDIkYWJzQywgXCIpXCIpLCBjU3VtKVxuICAgIGR0MiRkaWZmRiA8LSBzYXBwbHkocGFzdGUwKFwic3VtKDE6XCIsIGR0MiRhYnNGLCBcIilcIiksIGNTdW0pXG4gICAgbWluKHN1bShkdDIkZGlmZkMpLCBzdW0oZHQyJGRpZmZGKSlcbiAgfSxcbiAgcmVwbGljYXRpb25zID0gMSxcbiAgY29sdW1ucyA9IDE6NSxcbiAgb3JkZXIgPSBcInVzZXIuc2VsZlwiXG4pXG5cbmJlbmNoJHBlciA8LSBiZW5jaCR1c2VyLnNlbGYgLyBiZW5jaCRyZXBsaWNhdGlvbnNcbmJlbmNoXG5gYGAifQ== -->
+<pre class="r"><code>bench &lt;- rbenchmark::benchmark(
+  &quot;first&quot; = {
+    library(stringr)
+    library(tidyverse)
+    library(data.table)
+    dt &lt;-
+      as.numeric(data.table::fread(&quot;input.txt&quot;, header = FALSE)[1])
+    # part 1
+    dt2 &lt;- data.table(&quot;start&quot; = dt)
+    s &lt;- c()
+    for (i in-max(dt):max(dt)) {
+      dt2 &lt;- data.table(&quot;start&quot; = dt)
+      dt2[, mean := floor(mean(start))][, diff := abs(start - mean + i)]
+      s &lt;- append(s, sum(dt2$diff))
+    }
+    s &lt;- min(s)
+    
+    # part 2
+    dt2 &lt;- data.table(&quot;start&quot; = dt)
+    s &lt;- c()
+    
+    for (i in-max(dt):max(dt)) {
+      dt2 &lt;- data.table(&quot;start&quot; = dt)
+      dt2[, mean := floor(mean(start))]
+      for (r in 1:nrow(dt2))
+        dt2$diff[r] &lt;- sum(1:(abs(dt2$start[r] - dt2$mean[r] - i)))
+      s &lt;- append(s, sum(dt2$diff))
+    }
+    s &lt;- min(s)
+  },
+  &quot;second&quot; = {
+    library(stringr)
+    library(tidyverse)
+    library(data.table)
+    dt &lt;-
+      as.numeric(data.table::fread(&quot;input.txt&quot;, header = FALSE)[1])
+    # part 1
+    s &lt;- max(dt) ^ length(dt)
+    for (i in-ceiling(max(dt) / 2):ceiling(max(dt) / 2)) {
+      dt2 &lt;-
+        data.table(&quot;start&quot; = dt)[, mean := floor(mean(start))][, diff := abs(start - mean - i)]
+      dtDiff &lt;- sum(dt2$diff)
+      s &lt;- data.table::fifelse(dtDiff &lt; s, dtDiff, s)
+    }
+    s &lt;- c(s)
+    
+    cSum &lt;- function(y) {
+      eval(parse(text = y))
+    }
+    dt2 &lt;- data.table(&quot;start&quot; = dt)
+    dt2[, mean := mean(dt2$start, na.rm = TRUE)]
+    dt2$abs &lt;- abs(dt2$start - dt2$mean)
+    dt2$meanC &lt;- ceiling(dt2$mean)
+    dt2$meanF &lt;- floor(dt2$mean)
+    dt2$absC &lt;- abs(dt2$start - dt2$meanC)
+    dt2$absF &lt;- abs(dt2$start - dt2$meanF)
+    dt2$diffC &lt;- sapply(paste0(&quot;sum(1:&quot;, dt2$absC, &quot;)&quot;), cSum)
+    dt2$diffF &lt;- sapply(paste0(&quot;sum(1:&quot;, dt2$absF, &quot;)&quot;), cSum)
+    min(sum(dt2$diffC), sum(dt2$diffF))
+  },
+  replications = 1,
+  columns = 1:5,
+  order = &quot;user.self&quot;
+)
+
+bench$per &lt;- bench$user.self / bench$replications
+bench</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MiwibmNvbCI6Niwic3VtbWFyeSI6eyJEZXNjcmlwdGlvbiI6WyJkZiBbMiDDlyA2XSJdfX0sInJkZiI6Ikg0c0lBQUFBQUFBQUEzVlJQVS9ETUJDOXBQbG9JeWhJSUdiK1FEUEF3bEtSZ1E4SnNZQW82bXBTdDBRWXg3SVRGZGo3TnhpQUZZa0o4U01ZMkppQmtaRzljR25zcW8xRXBGUGVlNzQ3dnpzZjczUTNnMjRBQURWd0xBdHFMa0p3T3lkN3JTMEF4MFppZ1FPTjRuK0ZTU3NJUEl4bERGc2ZlSXJHS2U5cDV2WVRxVElFaTVPVW9yNk1ac0czUDFkdlB2YWZJT29jdE1YOWUzMnEzNzRjZlkvV0lWbzdmTVh2YmFwL0JXM3hBQkNkUHY0ODc5N0IvMzNtdkxxY1hGS2xmWHBhZERLS3hrcThJS2xnU1V5eUpPVkthNDFjVVJrcXl2cGFxS3RyTmN0OXlvaFExRXhhRTFSVzdtM0lkQmlhdTgwQzlCTG1EY2FNS0dQUWlFR1BaQ1RzUzZ4SE5xNlUrS2tvM1lKZHZJSmZLYlprMFVIdkdpcDRObkVwNTRYRFhpcyt6L2xGYTJNbTFkS3VMZTNhWUsrMFl2L3FWcjU1ZWNvSENhZkdJSTZ0eUdCS2gwVHloQS9NeEl5Y1VhWkpFL2MwV1ZNb1pNTE5vd1NvcWpCTE0yTHlnamhsUnBsc0JNWi82MitBMmJJQ0FBQT0ifQ== -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["test"],"name":[1],"type":["chr"],"align":["left"]},{"label":["replications"],"name":[2],"type":["int"],"align":["right"]},{"label":["elapsed"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["relative"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["user.self"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["sys.self"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["user.child"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["sys.child"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"first","2":"10","3":"11.851","4":"4.17","5":"11.497","6":"0.356","7":"0","8":"0","_rn_":"1"},{"1":"second","2":"10","3":"2.842","4":"1.00","5":"2.759","6":"0.083","7":"0","8":"0","_rn_":"2"}],"options":{"columns":{"min":{},"max":[10],"total":[8]},"rows":{"min":[10],"max":[10],"total":[2]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["test"],"name":[1],"type":["chr"],"align":["left"]},{"label":["replications"],"name":[2],"type":["int"],"align":["right"]},{"label":["user.self"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["sys.self"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["elapsed"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["per"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"second","2":"1","3":"0.565","4":"0.030","5":"0.595","6":"0.565","_rn_":"2"},{"1":"first","2":"1","3":"85.160","4":"5.575","5":"90.718","6":"85.160","_rn_":"1"}],"options":{"columns":{"min":{},"max":[10],"total":[6]},"rows":{"min":[10],"max":[10],"total":[2]},"pages":{}}}
   </script>
 </div>
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyBwYXJ0IDFcbmR0MiA8LSBkYXRhLnRhYmxlKFxcc3RhcnRcXCA9IGR0KVxucyA8LSBjKClcbmZvcihpIGluIC1tYXgoZHQpOm1heChkdCkpIHtcbiAgZHQyIDwtIGRhdGEudGFibGUoXFxzdGFydFxcID0gZHQpXG4gIGR0MlssIG1lYW4gOj0gZmxvb3IobWVhbihzdGFydCkpXVssIGRpZmYgOj0gYWJzKHN0YXJ0IC0gbWVhbiArIGkpXVxuICBzIDwtIGFwcGVuZChzLCBzdW0oZHQyJGRpZmYpKVxufVxuIyAzNTM4MzhcbiMgMzUyMDA0XG5taW4ocylcbmBgYFxuYGBgIn0= -->
-<pre class="r"><code>```r
-# part 1
-dt2 &lt;- data.table(\start\ = dt)
-s &lt;- c()
-for(i in -max(dt):max(dt)) {
-  dt2 &lt;- data.table(\start\ = dt)
-  dt2[, mean := floor(mean(start))][, diff := abs(start - mean + i)]
-  s &lt;- append(s, sum(dt2$diff))
-}
-# 353838
-# 352004
-min(s)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
+</div>
 
-&lt;!-- rnb-output-begin eyJkYXRhIjoiWzFdIDM0MjczMFxuIn0= --&gt;
-</code></pre>
-<p>[1] 342730</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyBwYXJ0IDJcbmR0MiA8LSBkYXRhLnRhYmxlKFxcc3RhcnRcXCA9IGR0KVxucyA8LSBjKClcbmZvcihpIGluIC1tYXgoZHQpOm1heChkdCkpIHtcbiAgZHQyIDwtIGRhdGEudGFibGUoXFxzdGFydFxcID0gZHQpXG4gIGR0MlssIG1lYW4gOj0gZmxvb3IobWVhbihzdGFydCkpXVxuICBmb3IociBpbiAxOm5yb3coZHQyKSlcbiAgICBkdDIkZGlmZltyXSA8LSBzdW0oMTooYWJzKGR0MiRzdGFydFtyXSAtIGR0MiRtZWFuW3JdIC0gaSkpKVxuICBzIDwtIGFwcGVuZChzLCBzdW0oZHQyJGRpZmYpKVxufVxuIyAzNTM4MzhcbiMgMzUyMDA0XG5taW4ocylcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-# part 2
-dt2 &lt;- data.table(\start\ = dt)
-s &lt;- c()
-for(i in -max(dt):max(dt)) {
-  dt2 &lt;- data.table(\start\ = dt)
-  dt2[, mean := floor(mean(start))]
-  for(r in 1:nrow(dt2))
-    dt2$diff[r] &lt;- sum(1:(abs(dt2$start[r] - dt2$mean[r] - i)))
-  s &lt;- append(s, sum(dt2$diff))
-}
-# 353838
-# 352004
-min(s)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiWzFdIDkyMzM1MjA3XG4ifQ== --&gt;
-</code></pre>
-<p>[1] 92335207 ```</p>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiQWR2ZW50IG9mIENvZGUgMjAyMSAtIERheSA3IgphdXRob3I6ICJHdXMgTGlwa2luIH4gZ2l0aHViLmNvbS9ndXNsaXBraW4vQWR2ZW50T2ZDb2RlMjAyMSIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CmxpYnJhcnkoc3RyaW5ncikKbGlicmFyeSh0aWR5dmVyc2UpCmxpYnJhcnkoZGF0YS50YWJsZSkKCiMgZHQgPC0gZnJlYWQoImlucHV0LnR4dCIsIGhlYWRlciA9IEZBTFNFKQpkdCA8LSBhcy5udW1lcmljKGRhdGEudGFibGU6OmZyZWFkKCJpbnB1dC50eHQiLCBoZWFkZXIgPSBGQUxTRSlbMV0pCmBgYAoKCmBgYHtyfQojIHBhcnQgMQpkdDIgPC0gZGF0YS50YWJsZSgic3RhcnQiID0gZHQpCnMgPC0gYygpCmZvcihpIGluIC1tYXgoZHQpOm1heChkdCkpIHsKICBkdDIgPC0gZGF0YS50YWJsZSgic3RhcnQiID0gZHQpCiAgZHQyWywgbWVhbiA6PSBmbG9vcihtZWFuKHN0YXJ0KSldWywgZGlmZiA6PSBhYnMoc3RhcnQgLSBtZWFuICsgaSldCiAgcyA8LSBhcHBlbmQocywgc3VtKGR0MiRkaWZmKSkKfQptaW4ocykKYGBgCgpgYGB7cn0KIyBwYXJ0IDIKZHQyIDwtIGRhdGEudGFibGUoInN0YXJ0IiA9IGR0KQpzIDwtIGMoKQoKZm9yKGkgaW4gLW1heChkdCk6bWF4KGR0KSkgewogIGR0MiA8LSBkYXRhLnRhYmxlKCJzdGFydCIgPSBkdCkKICBkdDJbLCBtZWFuIDo9IGZsb29yKG1lYW4oc3RhcnQpKV0KICBmb3IociBpbiAxOm5yb3coZHQyKSkKICAgIGR0MiRkaWZmW3JdIDwtIHN1bSgxOihhYnMoZHQyJHN0YXJ0W3JdIC0gZHQyJG1lYW5bcl0gLSBpKSkpCiAgcyA8LSBhcHBlbmQocywgc3VtKGR0MiRkaWZmKSkKfQptaW4ocykKYGBgCgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiQWR2ZW50IG9mIENvZGUgMjAyMSAtIERheSA3IFNwZWVkIEVkaXRpb24iCmF1dGhvcjogIkd1cyBMaXBraW4gfiBnaXRodWIuY29tL2d1c2xpcGtpbi9BZHZlbnRPZkNvZGUyMDIxIgpvdXRwdXQ6CiAgcGRmX2RvY3VtZW50OiBkZWZhdWx0CiAgaHRtbF9ub3RlYm9vazogZGVmYXVsdAogIGh0bWxfZG9jdW1lbnQ6CiAgICBkZl9wcmludDogcGFnZWQKLS0tCgo+IFBsZWFzZSBkb24ndCBsb29rIGF0IHRoaXMuIEl0J3MgZW1iYXJyYXNzaW5nLgo+IAo+IEkgb25seSBkaWQgb25lIHJlcCBiZWNhdXNlIG15IGZpcnN0IHRyeSBpcyB0b28gc2xvdy4KCiMgRmFzdGVzdCBzb2x1dGlvbgoKYGBge3IgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0KbGlicmFyeShzdHJpbmdyKQpsaWJyYXJ5KHRpZHl2ZXJzZSkKbGlicmFyeShkYXRhLnRhYmxlKQoKCmR0IDwtIGFzLm51bWVyaWMoZGF0YS50YWJsZTo6ZnJlYWQoImlucHV0LnR4dCIsIGhlYWRlciA9IEZBTFNFKVsxXSkKIyBwYXJ0IDEKcyA8LSBtYXgoZHQpIF4gbGVuZ3RoKGR0KQpmb3IgKGkgaW4tY2VpbGluZyhtYXgoZHQpIC8gMik6Y2VpbGluZyhtYXgoZHQpIC8gMikpIHsKICBkdDIgPC0KICAgIGRhdGEudGFibGUoInN0YXJ0IiA9IGR0KVssIG1lYW4gOj0gZmxvb3IobWVhbihzdGFydCkpXVssIGRpZmYgOj0gYWJzKHN0YXJ0IC0gbWVhbiAtIGkpXQogIGR0RGlmZiA8LSBzdW0oZHQyJGRpZmYpCiAgcyA8LSBkYXRhLnRhYmxlOjpmaWZlbHNlKGR0RGlmZiA8IHMsIGR0RGlmZiwgcykKfQpzIDwtIGMocykKCiMgcGFydCAyCmNTdW0gPC0gZnVuY3Rpb24oeSkgewogIGV2YWwocGFyc2UodGV4dCA9IHkpKQp9CmR0MiA8LSBkYXRhLnRhYmxlKCJzdGFydCIgPSBkdCkKZHQyWywgbWVhbiA6PSBtZWFuKGR0MiRzdGFydCwgbmEucm0gPSBUUlVFKV0KZHQyJGFicyA8LSBhYnMoZHQyJHN0YXJ0IC0gZHQyJG1lYW4pCmR0MiRtZWFuQyA8LSBjZWlsaW5nKGR0MiRtZWFuKQpkdDIkbWVhbkYgPC0gZmxvb3IoZHQyJG1lYW4pCmR0MiRhYnNDIDwtIGFicyhkdDIkc3RhcnQgLSBkdDIkbWVhbkMpCmR0MiRhYnNGIDwtIGFicyhkdDIkc3RhcnQgLSBkdDIkbWVhbkYpCmR0MiRkaWZmQyA8LSBzYXBwbHkocGFzdGUwKCJzdW0oMToiLCBkdDIkYWJzQywgIikiKSwgY1N1bSkKZHQyJGRpZmZGIDwtIHNhcHBseShwYXN0ZTAoInN1bSgxOiIsIGR0MiRhYnNGLCAiKSIpLCBjU3VtKQpzIDwtIG1pbihzdW0oZHQyJGRpZmZDKSwgc3VtKGR0MiRkaWZmRikpCmBgYAoKIyBCZW5jaG1hcmsKCmBgYHtyIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9CmJlbmNoIDwtIHJiZW5jaG1hcms6OmJlbmNobWFyaygKICAiZmlyc3QiID0gewogICAgbGlicmFyeShzdHJpbmdyKQogICAgbGlicmFyeSh0aWR5dmVyc2UpCiAgICBsaWJyYXJ5KGRhdGEudGFibGUpCiAgICBkdCA8LQogICAgICBhcy5udW1lcmljKGRhdGEudGFibGU6OmZyZWFkKCJpbnB1dC50eHQiLCBoZWFkZXIgPSBGQUxTRSlbMV0pCiAgICAjIHBhcnQgMQogICAgZHQyIDwtIGRhdGEudGFibGUoInN0YXJ0IiA9IGR0KQogICAgcyA8LSBjKCkKICAgIGZvciAoaSBpbi1tYXgoZHQpOm1heChkdCkpIHsKICAgICAgZHQyIDwtIGRhdGEudGFibGUoInN0YXJ0IiA9IGR0KQogICAgICBkdDJbLCBtZWFuIDo9IGZsb29yKG1lYW4oc3RhcnQpKV1bLCBkaWZmIDo9IGFicyhzdGFydCAtIG1lYW4gKyBpKV0KICAgICAgcyA8LSBhcHBlbmQocywgc3VtKGR0MiRkaWZmKSkKICAgIH0KICAgIHMgPC0gbWluKHMpCiAgICAKICAgICMgcGFydCAyCiAgICBkdDIgPC0gZGF0YS50YWJsZSgic3RhcnQiID0gZHQpCiAgICBzIDwtIGMoKQogICAgCiAgICBmb3IgKGkgaW4tbWF4KGR0KTptYXgoZHQpKSB7CiAgICAgIGR0MiA8LSBkYXRhLnRhYmxlKCJzdGFydCIgPSBkdCkKICAgICAgZHQyWywgbWVhbiA6PSBmbG9vcihtZWFuKHN0YXJ0KSldCiAgICAgIGZvciAociBpbiAxOm5yb3coZHQyKSkKICAgICAgICBkdDIkZGlmZltyXSA8LSBzdW0oMTooYWJzKGR0MiRzdGFydFtyXSAtIGR0MiRtZWFuW3JdIC0gaSkpKQogICAgICBzIDwtIGFwcGVuZChzLCBzdW0oZHQyJGRpZmYpKQogICAgfQogICAgcyA8LSBtaW4ocykKICB9LAogICJzZWNvbmQiID0gewogICAgbGlicmFyeShzdHJpbmdyKQogICAgbGlicmFyeSh0aWR5dmVyc2UpCiAgICBsaWJyYXJ5KGRhdGEudGFibGUpCiAgICBkdCA8LQogICAgICBhcy5udW1lcmljKGRhdGEudGFibGU6OmZyZWFkKCJpbnB1dC50eHQiLCBoZWFkZXIgPSBGQUxTRSlbMV0pCiAgICAjIHBhcnQgMQogICAgcyA8LSBtYXgoZHQpIF4gbGVuZ3RoKGR0KQogICAgZm9yIChpIGluLWNlaWxpbmcobWF4KGR0KSAvIDIpOmNlaWxpbmcobWF4KGR0KSAvIDIpKSB7CiAgICAgIGR0MiA8LQogICAgICAgIGRhdGEudGFibGUoInN0YXJ0IiA9IGR0KVssIG1lYW4gOj0gZmxvb3IobWVhbihzdGFydCkpXVssIGRpZmYgOj0gYWJzKHN0YXJ0IC0gbWVhbiAtIGkpXQogICAgICBkdERpZmYgPC0gc3VtKGR0MiRkaWZmKQogICAgICBzIDwtIGRhdGEudGFibGU6OmZpZmVsc2UoZHREaWZmIDwgcywgZHREaWZmLCBzKQogICAgfQogICAgcyA8LSBjKHMpCiAgICAKICAgIGNTdW0gPC0gZnVuY3Rpb24oeSkgewogICAgICBldmFsKHBhcnNlKHRleHQgPSB5KSkKICAgIH0KICAgIGR0MiA8LSBkYXRhLnRhYmxlKCJzdGFydCIgPSBkdCkKICAgIGR0MlssIG1lYW4gOj0gbWVhbihkdDIkc3RhcnQsIG5hLnJtID0gVFJVRSldCiAgICBkdDIkYWJzIDwtIGFicyhkdDIkc3RhcnQgLSBkdDIkbWVhbikKICAgIGR0MiRtZWFuQyA8LSBjZWlsaW5nKGR0MiRtZWFuKQogICAgZHQyJG1lYW5GIDwtIGZsb29yKGR0MiRtZWFuKQogICAgZHQyJGFic0MgPC0gYWJzKGR0MiRzdGFydCAtIGR0MiRtZWFuQykKICAgIGR0MiRhYnNGIDwtIGFicyhkdDIkc3RhcnQgLSBkdDIkbWVhbkYpCiAgICBkdDIkZGlmZkMgPC0gc2FwcGx5KHBhc3RlMCgic3VtKDE6IiwgZHQyJGFic0MsICIpIiksIGNTdW0pCiAgICBkdDIkZGlmZkYgPC0gc2FwcGx5KHBhc3RlMCgic3VtKDE6IiwgZHQyJGFic0YsICIpIiksIGNTdW0pCiAgICBtaW4oc3VtKGR0MiRkaWZmQyksIHN1bShkdDIkZGlmZkYpKQogIH0sCiAgcmVwbGljYXRpb25zID0gMSwKICBjb2x1bW5zID0gMTo1LAogIG9yZGVyID0gInVzZXIuc2VsZiIKKQoKYmVuY2gkcGVyIDwtIGJlbmNoJHVzZXIuc2VsZiAvIGJlbmNoJHJlcGxpY2F0aW9ucwpiZW5jaApgYGAKCg==</div>
 
 
 
@@ -1953,7 +1937,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("AoC2021-Day07.Rmd");
+  window.initializeSourceEmbed("AoC2021-Day07-SpeedEdition.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>

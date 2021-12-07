@@ -30,6 +30,7 @@ min(s)
 # part 2
 dt2 <- data.table("start" = dt)
 s <- c()
+
 for(i in -max(dt):max(dt)) {
   dt2 <- data.table("start" = dt)
   dt2[, mean := floor(mean(start))]
