@@ -1,0 +1,121 @@
+---
+title: "Advent of Code 2021 - Day 9"
+author: "Gus Lipkin ~ github.com/guslipkin/AdventOfCode2021"
+output: html_notebook
+---
+
+```{r}
+library(stringr)
+library(tidyverse)
+library(data.table)
+
+# dt <- fread("input.txt", header = FALSE)
+dt <- fread("input.txt", header = FALSE, colClasses = "character")
+dt <- data.frame(str_split(dt$V1, "", simplify = TRUE))
+dtPadTop <- dt[1,]
+dtPadTop[!is.na(dtPadTop)] <- 10
+dt <- rbind(rbind(dtPadTop, dt), dtPadTop)
+dtPadSides <- dt[,1]
+dtPadSides[!is.na(dtPadSides)] <- 10
+
+dt <- cbind(cbind(dtPadSides, dt), dtPadSides)
+
+dt <- data.frame(apply(dt, 2, as.numeric))
+dt
+```
+
+
+```{r}
+# part 1
+dt2 <- dt
+
+coordX <- c()
+coordY <- c()
+rLow <- c()
+for(r in 2:(nrow(dt2) - 1)) {
+  for(c in 2:(ncol(dt2) - 1)) {
+    if(dt2[r,c] == min(dt[(r-1):(r+1),(c-1):(c+1)])) {
+      rLow <- append(rLow, dt2[r,c])
+      coordX <- append(coordX, c)
+      coordY <- append(coordY, r)
+    }
+  }
+}
+
+riskLevel <- function(x, y) {
+  
+}
+s <- 0
+for(n in 1:length(rLow)) {
+  s <- s + (rLow[n] + 1)
+}
+s
+```
+
+```{r warning=FALSE}
+# part 2
+dt2 <- dt
+dt2[dt2 == 10 | dt2 == 9] <- NA
+fwrite(dt2, "input3.csv")
+
+coordX <- c()
+coordY <- c()
+rLow <- c()
+for(r in 2:(nrow(dt2) - 1)) {
+  for(c in 2:(ncol(dt2) - 1)) {
+    if(!is.na(dt2[r,c])) {
+      rLow <- append(rLow, dt2[r,c])
+      coordX <- append(coordX, c)
+      coordY <- append(coordY, r)
+    }
+  }
+}
+
+dt3 <- data.frame("x" = coordX, "y" = coordY, "d" = rLow)
+
+# use recursion to get neighbors
+getNeighbors <- function(x, y) {
+  x[x$x ]
+}
+
+library(dbscan)
+library(factoextra)
+# dt3[!(dt3$d %in% order(lof(dt3, minPts = 3), decreasing = TRUE)),]
+db <- dbscan(dt3, minPts = 3, eps = 1.42, borderPoints = TRUE)
+dt3$cluster <- db$cluster
+dt3 %>%
+  group_by(cluster) %>%
+  count() %>%
+  arrange(desc(n))
+fwrite(x = dt3, "input3.csv")
+fviz_cluster(db, data = dt3, choose.vars = c("x", "y")) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+# 86766120
+# 8614508
+# 95709744 high
+# 913492
+# 341120
+# 106 106 117
+# (499+17)*(483+9)*(360+17)
+# 
+# dt3 <- dt3 %>%
+#   filter(cluster %in% c(dt3$cluster[1:4]))
+# db <- dt3 %>%
+#   dbscan(minPts = 10, eps = 1.415, borderPoints = TRUE)
+# dt3$cluster <- db$cluster
+# dt3 %>%
+#   group_by(cluster) %>%
+#   count() %>%
+#   arrange(desc(n))
+# 61*54*52
+# 113*94*86
+# 206*206*203
+# dt3 %>%
+#   ggplot() +
+#   geom_point(aes(x = x, y = y, color = as.factor(cluster))) +
+#   theme(legend.position = "none")
+172 * 166 * 166
+```
+
