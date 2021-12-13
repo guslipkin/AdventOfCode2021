@@ -16,17 +16,18 @@ coords <- data.frame(str_split(coords, ",", simplify = TRUE))
 coords <- data.frame(sapply(coords, as.numeric))
 coords <- coords + 1
 
-paper <- matrix(data = FALSE, nrow = max(coords$X2)+1, ncol = max(coords$X1))
-for(r in 1:nrow(coords)) { paper[coords$X2[r], coords$X1[r]] <- TRUE }
-
 folds <- str_remove_all(dt[grepl("fold along", dt)], "fold along ")
 folds <- data.frame(str_split(folds, "=", simplify = TRUE))
 folds$X2 <- as.numeric(folds$X2)
+
+paper <- matrix(data = FALSE,
+                nrow = (max(folds$X2[folds$X1 == "y"]) * 2) + 1,
+                ncol = (max(folds$X2[folds$X1 == "x"]) * 2) + 1)
+for(r in 1:nrow(coords)) { paper[coords$X2[r], coords$X1[r]] <- TRUE }
 ```
 
 ```{r}
 # part 1
-
 fold <- function(dir, n, paper) {
   if (dir == "x") {
     paper1 <- paper[,1:(n)]
@@ -48,7 +49,6 @@ length(which(folded))
 
 ```{r}
 # part 2
-
 fold <- function(dir, n, paper) {
   if (dir == "x") {
     paper1 <- paper[,1:(n)]
