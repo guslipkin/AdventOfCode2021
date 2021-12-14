@@ -1,0 +1,96 @@
+---
+title: "Advent of Code 2021 - Day 14"
+author: "Gus Lipkin ~ github.com/guslipkin/AdventOfCode2021"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(stringr)
+library(data.table)
+
+dt <- readLines("input2.txt")
+polymer <- dt[!grepl(" -> ", dt)][1]
+polymer <- str_split(polymer, "", simplify = TRUE)[1,]
+pairs <- data.frame(str_split(dt[grepl(" -> ", dt)], " -> ", simplify = TRUE))
+```
+
+
+```{r}
+# part 1
+for(d in 1:10) {
+  pos <- data.frame("let" = NA, "pos" = NA)
+  for (i in 1:(length(polymer) - 1)) {
+    pos <- rbind(pos, data.frame("let" =
+                                   pairs$X2[pairs$X1 == paste0(polymer[i:(i + 1)],
+                                                               collapse = "")],
+                                 "pos" = i))
+  }
+  pos <- pos[-1, ]
+  
+  for (r in 1:nrow(pos)) {
+    polymer <-
+      R.utils::insert(x = polymer,
+                      values = pos$let[r],
+                      ats = r + pos$pos[r])
+  }
+}
+length(polymer)
+t <- sort(table(polymer))
+rev(t)[1] - t[1]
+```
+
+
+```{r}
+# part 2
+# pairsV <- pairs$X1
+# names(pairsV) <- pairsV
+# pairsV <- sapply(pairsV, function(x) { 0 })
+
+pairsList <- c()
+for(i in 1:(length(polymer) - 1)) {
+  pairsList <- append(pairsList, paste0(polymer[i:(i + 1)], collapse = ""))
+}
+pairsList <- table(pairsList)
+
+ohNo <- function(x, n) {
+  pairsNames <- names(x)
+  temp <- c()
+  for (i in pairsNames) {
+    mid <- pairs$X2[pairs$X1 == i]
+    str <- str_split(i, "", simplify = TRUE)[1, ]
+    temp <- append(temp,
+                   paste0(str[1], mid, str[2], collapse = ""))
+  }
+  temp <- table(temp)
+  newPairs <- c()
+  for (i in 1:length(temp)) {
+    val1 <- temp[i]
+    names(val1) <- paste0(substr(names(temp[i]), 1, 2))
+    newPairs <- append(newPairs, val1)
+    val2 <- temp[i]
+    names(val2) <- paste0(substr(names(temp[i]), 2, 3))
+    newPairs <- append(newPairs, val2)
+  }
+  newPairs <<- newPairs
+  # print(pairsList)
+  # print(temp)
+  # print(newPairs)
+  
+  x <- data.frame("pairs" = names(x), "vals" = x)
+  x <- x[,c(1, ncol(x))]
+  setnames(x, c("pairs", "vals"))
+  newPairs <- data.frame("pairs" = names(newPairs), "vals" = newPairs)
+  
+  x <- data.table(rbind(x, newPairs))[, .N, by = "pairs"]
+  
+  newPairs <- x$N
+  names(newPairs) <- x$pairs
+  
+  if(n == 1)
+    return(newPairs)
+  return(ohNo(newPairs, n-1))
+}
+ohNo(pairsList, 40)
+```
+
