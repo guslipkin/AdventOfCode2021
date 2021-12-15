@@ -24,7 +24,7 @@ sols <- data.frame(matrix(data = -1, nrow = n, ncol = n))
 pathX <- c()
 pathY <- c()
 
-sols[1, 1] <- dt[1, 1]
+sols[1, 1] <- 0
 
 for (i in 2:n) {
   sols[i, 1] <- sols[i - 1, 1] + dt[i, 1]
@@ -51,13 +51,14 @@ data.frame("x" = pathX, "y" = pathY) %>%
   ggplot() +
   geom_point(aes(x = x, y = y))
 
-sols[n,m] - sols[1,1]
+sols[n,m]
 # 447
 # 440
 # 454
 # 520
 # 513
-fwrite(sols, "sols.csv")
+# 514
+# 518
 ```
 
 
