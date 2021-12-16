@@ -1,0 +1,27 @@
+---
+title: "Advent of Code 2021 - Day 16"
+author: "Gus Lipkin ~ github.com/guslipkin/AdventOfCode2021"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(stringr)
+library(data.table)
+
+dt <- readLines("input.txt")
+dt <- str_split(dt, "", simplify = TRUE)
+dt <- data.frame(apply(dt, 2, as.numeric))
+```
+
+
+```{r}
+# part 1
+
+```
+
+
+```{r}
+# part 2
+```
+
